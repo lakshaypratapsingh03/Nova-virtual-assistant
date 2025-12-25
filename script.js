@@ -1,16 +1,35 @@
-
 let btn = document.querySelector("#btn");
 let content = document.querySelector("#content");
 let voice = document.querySelector("#voice");
 
 function Speak(text) {
+    let synth = window.speechSynthesis;
+    let voices = synth.getVoices();
+
+
+    let hindiFemale = voices.find(voice =>
+        voice.lang === "hi-IN" && (
+            voice.name.toLowerCase().includes("female") ||
+            voice.name.toLowerCase().includes("heera") || 
+            voice.name.toLowerCase().includes("google")
+        )
+    );
+
     let text_Speak = new SpeechSynthesisUtterance(text);
     text_Speak.rate = 1;
     text_Speak.pitch = 1;
     text_Speak.volume = 1;
     text_Speak.lang = "hi-IN";
-    window.speechSynthesis.speak(text_Speak);
+
+    
+    if (hindiFemale) {
+        text_Speak.voice = hindiFemale;
+    }
+
+    synth.speak(text_Speak);
 }
+
+
 
 function wishMe() {
     let date = new Date();
@@ -25,9 +44,10 @@ function wishMe() {
         Speak("Good Evening sir");
     }
 }
-//   window.addEventListener("load", () => {
-//    wishMe();
-//})
+
+    window.addEventListener("load", () => {
+    wishMe();
+})
 
 let speechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 let recognition = new speechRecognition();
@@ -96,11 +116,9 @@ function takeCommand(message) {
         Speak(date);
     }
 
-
     else {
         let finalText = "this is what I found on internet regarding" + message.replace("nova", "");
         Speak(finalText);
         window.open(`https://www.google.com/search?q=${message.replace("nova", "")}`, "_blank");
     }
 }
-
