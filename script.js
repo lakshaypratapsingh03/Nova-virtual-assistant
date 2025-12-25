@@ -9,9 +9,9 @@ function Speak(text) {
 
     let hindiFemale = voices.find(voice =>
         voice.lang === "hi-IN" && (
-            voice.name.toLowerCase().includes("female") ||
-            voice.name.toLowerCase().includes("heera") || 
-            voice.name.toLowerCase().includes("google")
+            voice.name.toLowerCase().includes("google") ||  
+            voice.name.toLowerCase().includes("heera") ||    
+            voice.name.toLowerCase().includes("female")     
         )
     );
 
@@ -21,14 +21,19 @@ function Speak(text) {
     text_Speak.volume = 1;
     text_Speak.lang = "hi-IN";
 
-    
-    if (hindiFemale) {
+    let heeraVoice = voices.find(voice => voice.name.includes("Heera"));
+    if (heeraVoice) {
+        text_Speak.voice = heeraVoice;
+    } else if (hindiFemale) {
         text_Speak.voice = hindiFemale;
     }
 
     synth.speak(text_Speak);
 }
 
+speechSynthesis.onvoiceschanged = () => {
+    console.log("Available voices:", speechSynthesis.getVoices());
+};
 
 
 function wishMe() {
@@ -122,3 +127,4 @@ function takeCommand(message) {
         window.open(`https://www.google.com/search?q=${message.replace("nova", "")}`, "_blank");
     }
 }
+
