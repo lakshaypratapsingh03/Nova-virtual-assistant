@@ -8,7 +8,7 @@ function Speak(text) {
     text_Speak.rate = 1;
     text_Speak.pitch = 1;
     text_Speak.volume = 1;
-    text_Speak.lang = "hi-GB";
+    text_Speak.lang = "hi-IN";
     window.speechSynthesis.speak(text_Speak);
 }
 
@@ -103,3 +103,4 @@ function takeCommand(message) {
         window.open(`https://www.google.com/search?q=${message.replace("nova", "")}`, "_blank");
     }
 }
+
